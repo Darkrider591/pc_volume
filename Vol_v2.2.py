@@ -28,6 +28,7 @@ def load_points_txt(filename):
             print("Needed X,Y,Z coordinates")
             return None
         print(f"Uploaded {len(data)} points from {filename}")
+        
         return data[:, :3]
     except Exception as e:
         print(f"Error reading file: {str(e)}")
@@ -37,6 +38,10 @@ def load_points_las(filename):
     try:
         las = laspy.read(filename)
         points = np.vstack((las.x, las.y, las.z)).transpose()
+       # x = las.header.scaled_x.view(np.float64)
+       # y = las.header.scaled_y.view(np.float64)
+       # z = las.header.scaled_z.view(np.float64)
+       # points = np.vstack((x, y, z)).T
         print(f"Uploaded {len(points)} points from LAS")
         return points
     except Exception as e:
